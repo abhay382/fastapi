@@ -327,3 +327,8 @@ async def startup():
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8000)
+
+
+
+
+    https://medium.com/@ravipatel.it/a-simple-guide-to-understanding-jwt-tokens-basics-use-cases-and-implementation-29823fcd101b
