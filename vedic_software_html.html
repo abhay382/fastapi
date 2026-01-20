@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vedic Software - IT Solutions</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: #e2e8f0;
+            line-height: 1.6;
+        }
+
+        .nav {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .logo-container:hover {
+            transform: scale(1.05);
+        }
+
+        .logo-svg {
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo-text {
+            font-size: 1.8rem;
+            font-weight: bold;
+            background: linear-gradient(90deg, #10b981, #34d399);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #e2e8f0;
+            text-decoration: none;
+            cursor: pointer;
+            transition: color 0.3s;
+            font-weight: 500;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: #10b981;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: #10b981;
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-links a.active {
+            color: #10b981;
+        }
+
+        .nav-links a.active::after {
+            width: 100%;
+        }
+
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: #e2e8f0;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .page {
+            display: none;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .hero {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 5rem 2rem;
+            text-align: left;
+        }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: bold;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+            letter-spacing: -1px;
+        }
+
+        .hero-highlight {
+            background: linear-gradient(90deg, #10b981, #34d399);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: #cbd5e1;
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .btn {
+            padding: 0.75rem 2rem;
+            border: none;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: linear-gradient(90deg, #10b981, #34d399);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, #34d399, #10b981);
+            transition: left 0.3s;
+            z-index: -1;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(16, 185, 129, 0.3);
+        }
+
+        .btn-primary:hover::before {
+            left: 0;
+        }
+
+        .btn-secondary {
+            border: 2px solid #10b981;
+            color: #10b981;
+            background: transparent;
+        }
+
+        .btn-secondary:hover {
+            background: #10b981;
+            color: #0f172a;
+            transform: translateY(-2px);
+        }
+
+        .hero-image {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(34, 211, 238, 0.15));
+            border: 2px solid rgba(34, 211, 238, 0.3);
+            border-radius: 1rem;
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 8rem;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .features {
+            max-width: 1200px;
+            margin: 3rem auto;
+            padding: 5rem 2rem;
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.6), rgba(15, 23, 42, 0.6));
+            border-radius: 1rem;
+            border: 1px solid rgba(34, 211, 238, 0.1);
+        }
+
+        .features h2 {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            background: linear-gradient(90deg, #60a5fa, #22d3ee);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.8), rgba(15, 23, 42, 0.8));
+            border: 1px solid rgba(34, 211, 238, 0.2);
+            padding: 2rem;
+            border-radius: 0.75rem;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #3b82f6, #06b6d4);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s;
+        }
+
+        .feature-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .feature-card:hover {
+            border-color: rgba(34, 211, 238, 0.5);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(34, 211, 238, 0.15);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            color: #22d3ee;
+            margin-bottom: 1rem;
+            display: inline-block;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.75rem;
+            color: #e2e8f0;
+        }
+
+        .feature-card p {
+            color: #cbd5e1;
+            line-height: 1.6;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #e2e8f0;
+            background: linear-gradient(90deg, #60a5fa, #22d3ee);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-subtitle {
+            font-size: 1.25rem;
+            color: #cbd5e1;
+            margin-bottom: 3rem;
+        }
+
+        .services-grid, .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .service-card, .project-card {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.8), rgba(15, 23, 42, 0.8));
+            border: 1px solid rgba(34, 211, 238, 0.2);
+            padding: 2.5rem;
+            border-radius: 0.75rem;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .service-card::after, .project-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #22d3ee, transparent);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .service-card:hover::after, .project-card:hover::after {
+            opacity: 1;
+        }
+
+        .service-card:hover, .project-card:hover {
+            border-color: rgba(34, 211, 238, 0.5);
+            box-shadow: 0 15px 40px rgba(34, 211, 238, 0.2);
+            transform: translateY(-5px);
+        }
+
+        .service-card h3, .project-card h3 {
+            font-size: 1.5rem;
+            color: #e2e8f0;
+            margin: 1rem 0;
+        }
+
+        .service-card p, .project-card p {
+            color: #cbd5e1;
+            margin-bottom: 1rem;
+            line-height: 1.7;
+        }
+
+        .project-client {
+            color: #22d3ee;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .project-tech {
+            font-size: 0.9rem;
+            color: #94a3b8;
+            margin-bottom: 1rem;
+        }
+
+        .project-result {
+            padding-top: 1rem;
+            border-top: 1px solid rgba(34, 211, 238, 0.2);
+            color: #22d3ee;
+            font-weight: 600;
+            margin-top: 1rem;
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .about-text p {
+            margin-bottom: 1.5rem;
+            color: #cbd5e1;
+            line-height: 1.8;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .stat-item {
+            background: linear-gradient(135deg, rgba(34, 211, 238, 0.1), rgba(59, 130, 246, 0.1));
+            border: 1px solid rgba(34, 211, 238, 0.3);
+            padding: 2rem;
+            border-radius: 0.75rem;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .stat-item:hover {
+            border-color: rgba(34, 211, 238, 0.6);
+            box-shadow: 0 10px 30px rgba(34, 211, 238, 0.2);
+            transform: translateY(-5px);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            color: #22d3ee;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: #cbd5e1;
+        }
+
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .value-card {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.8), rgba(15, 23, 42, 0.8));
+            border: 1px solid rgba(34, 211, 238, 0.2);
+            padding: 2rem;
+            border-radius: 0.75rem;
+            transition: all 0.3s;
+        }
+
+        .value-card:hover {
+            border-color: rgba(34, 211, 238, 0.5);
+            box-shadow: 0 10px 30px rgba(34, 211, 238, 0.15);
+        }
+
+        .value-card h3 {
+            color: #22d3ee;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .contact-item {
+            display: flex;
+            gap: 1.5rem;
+            transition: all 0.3s;
+        }
+
+        .contact-item:hover {
+            transform: translateX(10px);
+        }
+
+        .contact-icon {
+            font-size: 1.5rem;
+            color: #22d3ee;
+            flex-shrink: 0;
+            min-width: 30px;
+            text-align: center;
+        }
+
+        .contact-text h3 {
+            color: #e2e8f0;
+            margin-bottom: 0.25rem;
+        }
+
+        .contact-text p {
+            color: #cbd5e1;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            font-size: 1.5rem;
+            color: #22d3ee;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .social-links a:hover {
+            color: #60a5fa;
+            transform: scale(1.2) rotateZ(10deg);
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.9), rgba(15, 23, 42, 0.9));
+            border: 1px solid rgba(34, 211, 238, 0.2);
+            border-radius: 0.5rem;
+            color: #e2e8f0;
+            font-family: inherit;
+            transition: all 0.3s;
+        }
+
+        .form-group input::placeholder, .form-group textarea::placeholder {
+            color: #64748b;
+        }
+
+        .form-group input:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: #22d3ee;
+            box-shadow: 0 0 10px rgba(34, 211, 238, 0.3);
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.95), rgba(15, 23, 42, 0.95));
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 150px;
+        }
+
+        .footer {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            padding: 3rem 2rem;
+            text-align: center;
+            color: #94a3b8;
+            border-top: 1px solid rgba(34, 211, 238, 0.2);
+            margin-top: 3rem;
+        }
+
+        .footer p {
+            margin-bottom: 0.5rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+
+            .hero-content {
+                grid-template-columns: 1fr;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero-image {
+                height: 300px;
+                font-size: 5rem;
+            }
+
+            .btn-group {
+                flex-direction: column;
+            }
+
+            .contact-grid, .about-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .social-links {
+                justify-content: center;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-container">
+            <div class="logo-container" onclick="showPage('home')">
+                <div class="logo-svg">
+                    <svg width="40" height="40" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Infinity Logo with Phoenix/Fire -->
+                        <defs>
+                            <linearGradient id="leftGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#22c55e;stop-opacity:1" />
+                                <stop offset="50%" style="stop-color:#84cc16;stop-opacity:1" />
+                                <stop offset="100%" style="stop-color:#fbbf24;stop-opacity:1" />
+                            </linearGradient>
+                            <linearGradient id="rightGradient" x1="0%" y1="100%" x2="100%" y2="0%">
+                                <stop offset="0%" style="stop-color:#1e40af;stop-opacity:1" />
+                                <stop offset="50%" style="stop-color:#3b82f6;stop-opacity:1" />
+                                <stop offset="100%" style="stop-color:#60a5fa;stop-opacity:1" />
+                            </linearGradient>
+                            <linearGradient id="fireGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#ef4444;stop-opacity:1" />
+                                <stop offset="50%" style="stop-color:#f97316;stop-opacity:1" />
+                                <stop offset="100%" style="stop-color:#fbbf24;stop-opacity:1" />
+                            </linearGradient>
+                        </defs>
+                        
+                        <!-- Left loop (Green) -->
+                        <path d="M 20 50 C 20 35 30 25 42 25 C 54 25 65 35 65 50 C 65 65 54 75 42 75 C 30 75 20 65 20 50" 
+                              fill="none" stroke="url(#leftGradient)" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+                        
+                        <!-- Right loop (Blue) -->
+                        <path d="M 35 50 C 35 35 45 25 58 25 C 70 25 80 35 80 50 C 80 65 70 75 58 75 C 45 75 35 65 35 50" 
+                              fill="none" stroke="url(#rightGradient)" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+                        
+                        <!-- Fire/Phoenix at center -->
+                        <g>
+                            <!-- Flame shapes -->
+                            <path d="M 50 35 Q 48 25 52 15 Q 54 25 55 35 Z" fill="url(#fireGradient)" opacity="0.9"/>
+                            <path d="M 45 40 Q 42 30 46 18 Q 49 32 50 40 Z" fill="url(#fireGradient)" opacity="0.8"/>
+                            <path d="M 55 40 Q 58 30 54 18 Q 51 32 50 40 Z" fill="url(#fireGradient)" opacity="0.8"/>
+                            <!-- Spark dots -->
+                            <circle cx="48" cy="20" r="1.5" fill="#fbbf24" opacity="0.8"/>
+                            <circle cx="52" cy="18" r="1.5" fill="#fbbf24" opacity="0.8"/>
+                        </g>
+                    </svg>
+                </div>
+                <div class="logo-text">VedicSoftware</div>
+            </div>
+            <ul class="nav-links">
+                <li><a onclick="showPage('home')" class="nav-link active">Home</a></li>
+                <li><a onclick="showPage('services')" class="nav-link">Services</a></li>
+                <li><a onclick="showPage('portfolio')" class="nav-link">Portfolio</a></li>
+                <li><a onclick="showPage('about')" class="nav-link">About</a></li>
+                <li><a onclick="showPage('contact')" class="nav-link">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Home Page -->
+    <div id="home" class="page active">
+        <div class="hero">
+            <div class="hero-content">
+                <div>
+                    <h1>Transform Your <span class="hero-highlight">Digital Vision</span></h1>
+                    <p>Cutting-edge software solutions for modern enterprises. We build the future, today.</p>
+                    <div class="btn-group">
+                        <button class="btn btn-primary" onclick="showPage('services')">Explore Services →</button>
+                        <button class="btn btn-secondary" onclick="showPage('contact')">Get In Touch</button>
+                    </div>
+                </div>
+                <div class="hero-image">💻</div>
+            </div>
+        </div>
+
+        <div class="features">
+            <h2>Why Choose Vedic?</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Lightning Fast</h3>
+                    <p>Optimized performance for maximum efficiency and reliability across all platforms</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔒</div>
+                    <h3>Secure & Reliable</h3>
+                    <p>Enterprise-grade security and 99.9% uptime guarantee for peace of mind</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">👥</div>
+                    <h3>Expert Team</h3>
+                    <p>50+ developers with 10+ years of industry experience and proven track record</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Services Page -->
+    <div id="services" class="page">
+        <div class="container">
+            <h2 class="section-title">Our Services</h2>
+            <p class="section-subtitle">Comprehensive IT solutions tailored to your needs</p>
+            
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="feature-icon">💻</div>
+                    <h3>Custom Software Development</h3>
+                    <p>Bespoke applications built with latest technologies. From concept to deployment, we handle it all with precision and expertise.</p>
+                </div>
+                <div class="service-card">
+                    <div class="feature-icon">☁️</div>
+                    <h3>Cloud Solutions</h3>
+                    <p>Scalable cloud infrastructure on AWS, Azure & GCP. Migration, optimization and management included in our comprehensive packages.</p>
+                </div>
+                <div class="service-card">
+                    <div class="feature-icon">🔐</div>
+                    <h3>Cybersecurity</h3>
+                    <p>Protect your assets with advanced security measures. Penetration testing, compliance audits and threat monitoring 24/7.</p>
+                </div>
+                <div class="service-card">
+                    <div class="feature-icon">🤖</div>
+                    <h3>AI & Machine Learning</h3>
+                    <p>Harness the power of AI. Predictive analytics, automation and intelligent systems to drive business growth.</p>
+                </div>
+                <div class="service-card">
+                    <div class="feature-icon">👨‍💼</div>
+                    <h3>Team Augmentation</h3>
+                    <p>Extend your team with vetted professionals. Flexible engagement models to fit your project needs and budget.</p>
+                </div>
+                <div class="service-card">
+                    <div class="feature-icon">🔧</div>
+                    <h3>DevOps & Maintenance</h3>
+                    <p>24/7 monitoring, updates and optimization. Ensure your systems run smoothly and efficiently always.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Portfolio Page -->
+    <div id="portfolio" class="page">
+        <div class="container">
+            <h2 class="section-title">Portfolio</h2>
+            <p class="section-subtitle">Recent projects that showcase our expertise</p>
+            
+            <div class="portfolio-grid">
+                <div class="project-card">
+                    <h3>FinTech Platform</h3>
+                    <p class="project-client">Global Banking Corp</p>
+                    <p class="project-tech"><strong>Tech Stack:</strong> React, Node.js, Blockchain</p>
+                    <p>A revolutionary fintech platform handling millions in transactions daily with cutting-edge blockchain technology and real-time settlement.</p>
+                    <div class="project-result">💰 $2M revenue in Year 1</div>
+                </div>
+                <div class="project-card">
+                    <h3>E-Commerce Marketplace</h3>
+                    <p class="project-client">TechRetail Inc</p>
+                    <p class="project-tech"><strong>Tech Stack:</strong> Vue.js, Python, PostgreSQL</p>
+                    <p>A full-featured marketplace connecting millions of sellers and buyers with real-time inventory management and AI recommendations.</p>
+                    <div class="project-result">📊 500K+ daily users</div>
+                </div>
+                <div class="project-card">
+                    <h3>Healthcare Analytics</h3>
+                    <p class="project-client">MedCare Solutions</p>
+                    <p class="project-tech"><strong>Tech Stack:</strong> Python, TensorFlow, AWS</p>
+                    <p>Advanced analytics platform using AI to predict patient outcomes and optimize healthcare delivery costs with machine learning.</p>
+                    <div class="project-result">📈 40% cost reduction</div>
+                </div>
+                <div class="project-card">
+                    <h3>IoT Monitoring System</h3>
+                    <p class="project-client">Industrial Systems Ltd</p>
+                    <p class="project-tech"><strong>Tech Stack:</strong> Rust, Kubernetes, RabbitMQ</p>
+                    <p>Real-time monitoring system for industrial equipment with predictive maintenance capabilities and automated alerts.</p>
+                    <div class="project-result">✅ 99.95% uptime</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- About Page -->
+    <div id="about" class="page">
+        <div class="container">
+            <h2 class="section-title">About Vedic Software</h2>
+            
+            <div class="about-grid">
+                <div class="about-text">
+                    <h3 style="font-size: 2rem; color: #e2e8f0; margin-bottom: 1.5rem;">Our Story</h3>
+                    <p>Founded in 2015, Vedic Software has grown into a leading IT solutions provider serving Fortune 500 companies and innovative startups alike.</p>
+                    <p>Our mission is simple: deliver exceptional technology solutions that drive real business value. We combine ancient wisdom with cutting-edge innovation to create timeless solutions.</p>
+                    <p>With offices in 5 countries and a team of 200+ professionals, we're committed to excellence in everything we do. Our name, inspired by the Vedic tradition of infinite knowledge, represents our commitment to continuous learning and innovation.</p>
+                </div>
+                
+                <div>
+                    <h3 style="font-size: 2rem; color: #e2e8f0; margin-bottom: 1.5rem;">By The Numbers</h3>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-number">200+</div>
+                            <div class="stat-label">Team Members</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">150+</div>
+                            <div class="stat-label">Projects Delivered</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">50+</div>
+                            <div class="stat-label">Fortune 500 Clients</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">11+</div>
+                            <div class="stat-label">Years Experience</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h3 style="font-size: 2rem; color: #e2e8f0; margin: 3rem 0 1.5rem;">Our Core Values</h3>
+            <div class="values-grid">
+                <div class="value-card">
+                    <h3>Innovation</h3>
+                    <p>Always exploring new technologies and methodologies to stay ahead of the curve and deliver cutting-edge solutions.</p>
+                </div>
+                <div class="value-card">
+                    <h3>Integrity</h3>
+                    <p>Building trust through transparency and honest communication with all stakeholders, always putting clients first.</p>
+                </div>
+                <div class="value-card">
+                    <h3>Excellence</h3>
+                    <p>Delivering superior quality in every project and exceeding client expectations with meticulous attention to detail.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact Page -->
+    <div id="contact" class="page">
+        <div class="container">
+            <h2 class="section-title">Get In Touch</h2>
+            <p class="section-subtitle">Have a project in mind? Let's talk!</p>
+            
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <div class="contact-icon">✉️</div>
+                        <div class="contact-text">
+                            <h3>Email</h3>
+                            <p>hello@vedicsoftware.com</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">📞</div>
+                        <div class="contact-text">
+                            <h3>Phone</h3>
+                            <p>+1 (555) 123-4567</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">📍</div>
+                        <div class="contact-text">
+                            <h3>Headquarters</h3>
+                            <p>San Francisco, California</p>
+                        </div>
+                    </div>
+
+                    <div style="padding-top: 2rem; border-top: 1px solid rgba(34, 211, 238, 0.2);">
+                        <h3 style="color: #e2e8f0; margin-bottom: 1rem;">Follow Us</h3>
+                        <div class="social-links">
+                            <a href="#" title="GitHub">🔗</a>
+                            <a href="#" title="LinkedIn">💼</a>
+                            <a href="#" title="Twitter">𝕏</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="form-group">
+                        <input type="text" placeholder="Your Name" id="name">
+                    </div>
+                    <div class="form-group">
+                        <input type="email" placeholder="Your Email" id="email">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" placeholder="Project Title" id="project">
+                    </div>
+                    <div class="form-group">
+                        <textarea placeholder="Tell us about your project..." id="message"></textarea>
+                    </div>
+                    <button class="btn btn-primary" onclick="sendMessage()" style="width: 100%;">Send Message →</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2024 Vedic Software. All rights reserved.</p>
+        <p style="font-size: 0.9rem;">Transforming vision into reality through code and innovation.</p>
+    </footer>
+
+    <script>
+        function showPage(pageId) {
+            // Hide all pages
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(page => page.classList.remove('active'));
+            
+            // Show selected page
+            document.getElementById(pageId).classList.add('active');
+            
+            // Update nav links
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => link.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
+        }
+
+        function sendMessage() {
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const project = document.getElementById('project').value;
+            const message = document.getElementById('message').value;
+            
+            if (name && email && project && message) {
+                alert('Thank you! Your message has been sent. We will get back to you soon.');
+                document.getElementById('name').value = '';
+                document.getElementById('email').value = '';
+                document.getElementById('project').value = '';
+                document.getElementById('message').value = '';
+            } else {
+                alert('Please fill in all fields.');
+            }
+        }
+    </script>
+</body>
+</html>
